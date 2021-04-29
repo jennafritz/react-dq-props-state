@@ -12,33 +12,50 @@ export default class BabyHog extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      weight: 0,
+      height: 200
+    }
   }
 
   changeWeight = (e) => {
     // nothing needs to change here
     const newWeight = e.target.name === "+" ? (this.state.weight + 10) : (this.state.weight - 10)
+    const newHeight = e.target.name === "+" ? (this.state.height + 20) : (this.state.height - 20)
     this.setState({
-      weight: newWeight
+      weight: newWeight,
+      height: newHeight      
     })
+  }
+
+  changeHeight = (e) => {
+
+  }
+
+  eyeColorMapper = {
+    'normal': normalBaby,
+    'blue': BlueBaby,
+    'glowing': GlowingBaby,
+    'sun': SunBaby
   }
 
   render() {
     return (
       <li className="hogbabies">
-        <h1>Name</h1>
-        <h3>Weight:</h3>
-        <h3>Hobby:</h3>
-        <h4>Eye Color:</h4>
+        <h1>{this.props.name}</h1>
+        <h3>Weight: {this.state.weight}</h3>
+        <h3>Hobby: {this.props.hobby}</h3>
+        <h4>Eye Color: {this.props.eyeColor}</h4>
           
-        <Button name="+">
-          Increase Weight
-        </Button>
-        <Button name="-">
+        <Button name="-" onClick = {(e) => this.changeWeight(e)}>
           Decrease Weight
+        </Button>
+        <Button name="+" onClick = {(e) => this.changeWeight(e)}>
+          Increase Weight
         </Button>
 
         <div className="hb-wrap">
-          <img src={normalBaby} style={{height: '200px'}} alt="MasterBlasterJrJr" />
+          <img src={this.eyeColorMapper[this.props.eyeColor]} style={{height: `${this.state.height}px`}} alt="MasterBlasterJrJr" />
         </div>
         
       </li>
